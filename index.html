@@ -198,8 +198,8 @@
         'E賞徽章3選2': 'prize_E_badge.png',
         'F賞人物吊飾': 'prize_F_character.png',
       };
-      return imageMap[prizeName] ? `images/${imageMap[prizeName]}` : '';
-    }
+      return imageMap[prizeName] || '';
+}
 
     function updateStockList() {
       stockList.innerHTML = '';
