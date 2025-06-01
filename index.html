@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <title>𝐋’𝐚𝐦𝐨𝐫𝐞 𝐯𝐢𝐧𝐜𝐞 𝐬𝐮 𝐭𝐮𝐭𝐭𝐨 抽籤機</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap');
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'ZCOOL KuaiLe', cursive;
+      background: linear-gradient(to bottom, #e3f2fd, #ffffff);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    h1 {
+      font-size: 3rem;
+      color: #2196f3;
+      text-shadow: 2px 2px #ffffff;
+      margin-bottom: 30px;
+      border: 3px solid #2196f3;
+      padding: 10px 20px;
+      border-radius: 12px;
+      background: rgba(33, 150, 243, 0.1);
+      word-break: break-word;
+      text-align: center;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      max-width: 1200px;
+      width: 100%;
+    }
+    .left-image {
+      max-width: 100%;
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.15);
+    }
+    .machine {
+      flex: 1;
+      min-width: 300px;
+      max-width: 400px;
+      background: #ffffff;
+      border: 4px dashed #64b5f6;
+      border-radius: 25px;
+      padding: 30px;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+      position: relative;
+      text-align: center;
+      color: #1976d2;
+    }
+    #ticket {
+      position: absolute;
+      bottom: 30%;
+      left: 50%;
+      transform: translate(-50%, 100%) scale(1);
+      background: #e3f2fd;
+      color: #0d47a1;
+      padding: 12px 36px;
+      border-radius: 18px;
+      border: 3px dotted #2196f3;
+      font-size: 26px;
+      font-weight: bold;
+      transition: transform 0.5s ease, opacity 0.5s ease;
+      opacity: 0;
+      z-index: 10;
+      animation: none;
+    }
+    @keyframes ticketAnimation {
+      0% { transform: translate(-50%, 100%) scale(0.5) rotate(0deg); opacity: 0; }
+      30% { transform: translate(-50%, 0%) scale(1.1) rotate(15deg); opacity: 1; }
+      50% { transform: translate(-50%, -30%) scale(1.05) rotate(-10deg); opacity: 1; }
+      70% { transform: translate(-50%, -60%) scale(1.1) rotate(5deg); opacity: 1; }
+      100% { transform: translate(-50%, -120%) scale(1) rotate(0deg); opacity: 0; }
+    }
+    #drawBtn {
+      background: #42a5f5;
+      color: white;
+      border: none;
+      padding: 16px 36px;
+      font-size: 22px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4);
+      transition: background 0.3s, transform 0.2s;
+      margin-top: 20px;
+    }
+    #drawBtn:hover {
+      background: #2196f3;
+      transform: scale(1.05);
+    }
+    #result {
+      margin-top: 25px;
+      font-size: 22px;
+      color: #0d47a1;
+    }
+    .glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(173,216,230,0.6), transparent);
+      animation: glow 1.5s ease-out forwards;
+      z-index: 0;
+    }
+    @keyframes glow {
+      0% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(2); }
+    }
+    .prize-list {
+      flex: 1;
+      min-width: 250px;
+      max-width: 300px;
+      background: #e3f2fd;
+      border: 3px dotted #64b5f6;
+      border-radius: 20px;
+      padding: 24px;
+      color: #0d47a1;
+      box-shadow: 0 0 20px rgba(0,0,0,0.06);
+    }
+    .prize-list h2 {
+      font-size: 22px;
+      color: #1976d2;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .prize-list ul {
+      list-style: none;
+      padding: 0;
+    }
+    .prize-list li {
+      padding: 6px 0;
+      font-size: 18px;
+      text-align: center;
+    }
+    #prizeImage {
+      max-width: 100%;
+      margin-top: 20px;
+      display: none;
+    }
+
+    /* 手機板調整 */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+      h1 {
+        font-size: 2rem;
+        padding: 10px;
+      }
+      .machine, .prize-list {
+        width: 100%;
+        max-width: 400px;
+      }
+      #drawBtn {
+        width: 100%;
+        font-size: 20px;
+      }
+      #ticket {
+        font-size: 20px;
+        padding: 10px 20px;
+      }
+      #result {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🎉𝐋’𝐚𝐦𝐨𝐫𝐞 𝐯𝐢𝐧𝐜𝐞 𝐬𝐮 𝐭𝐮𝐭𝐭𝐨 抽籤機🎉</h1>
+  <div class="container">
+    <img src="./5555.jpg" alt="左側圖片" class="left-image">
+    <div class="machine">
+      <div id="ticket"></div>
+      <button id="drawBtn">💙 抽籤開始</button>
+      <img id="prizeImage" src="" alt="獎品圖片" />
+      <div id="result"></div>
+    </div>
+    <div class="prize-list">
+      <h2>🎁 獎品剩餘</h2>
+      <ul id="stockList"></ul>
+    </div>
+  </div>
+
+  <script>
+    const prizes = [
+      { name: 'A賞反光手幅', weight: 5, stock: 1 },
+      { name: 'B賞化妝包', weight: 10, stock: 2 },
+      { name: 'C賞膠捲吊飾', weight: 15, stock: 3 },
+      { name: 'D賞小扇', weight: 20, stock: 4 },
+      { name: 'E賞徽章3選2', weight: 25, stock: 5 },
+      { name: 'F賞人物吊飾', weight: 25, stock: 6 },
+    ];
+
+    const ticket = document.getElementById('ticket');
+    const result = document.getElementById('result');
+    const drawBtn = document.getElementById('drawBtn');
+    const stockList = document.getElementById('stockList');
+    const prizeImage = document.getElementById('prizeImage');
+
+    function getPrizeImagePath(prizeName) {
+      const imageMap = {
+        'A賞反光手幅': 'prize_A_banner.png',
+        'B賞化妝包': 'prize_B_pouch.png',
+        'C賞膠捲吊飾': 'prize_C_filmcharm.png',
+        'D賞小扇': 'prize_D_fan.png',
+        'E賞徽章3選2': 'prize_E_badge.png',
+        'F賞人物吊飾': 'prize_F_character.png',
+      };
+      return imageMap[prizeName] ? `images/${imageMap[prizeName]}` : '';
+    }
+
+    function updateStockList() {
+      stockList.innerHTML = '';
+      prizes.forEach(p => {
+        const li = document.createElement('li');
+        li.textContent = `${p.name}：${p.stock}`;
+        stockList.appendChild(li);
+      });
+    }
+
+    function drawPrize() {
+      let available = prizes.filter(p => p.stock > 0);
+      let totalWeight = available.reduce((sum, p) => sum + p.weight, 0);
+      let rand = Math.random() * totalWeight;
+      let sum = 0;
+      for (let prize of available) {
+        sum += prize.weight;
+        if (rand < sum) {
+          prize.stock--;
+          return prize;
+        }
+      }
+      return { name: '謝謝參加' };
+    }
+
+    function showTicket(prizeName) {
+      ticket.textContent = prizeName;
+      ticket.style.animation = 'ticketAnimation 1.5s ease-out';
+      ticket.style.opacity = '1';
+      ticket.addEventListener('animationend', () => {
+        ticket.style.animation = '';
+        ticket.style.opacity = '0';
+      }, { once: true });
+    }
+
+    function showGlowIfA(prizeName) {
+      if (prizeName.includes('A賞')) {
+        const glow = document.createElement('div');
+        glow.classList.add('glow');
+        document.body.appendChild(glow);
+        setTimeout(() => glow.remove(), 1500);
+      }
+    }
+
+    drawBtn.addEventListener('click', () => {
+      const prize = drawPrize();
+      showTicket(prize.name);
+      result.textContent = `🌟 恭喜您抽中：${prize.name}`;
+      showGlowIfA(prize.name);
+      updateStockList();
+
+      const imgPath = getPrizeImagePath(prize.name);
+      if (imgPath) {
+        prizeImage.src = imgPath;
+        prizeImage.style.display = 'block';
+      } else {
+        prizeImage.style.display = 'none';
+      }
+    });
+
+    updateStockList();
+  </script>
+</body>
+</html>
