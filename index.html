@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -26,8 +28,6 @@
       padding: 10px 20px;
       border-radius: 12px;
       background: rgba(33, 150, 243, 0.1);
-      word-break: break-word;
-      text-align: center;
     }
     .container {
       display: flex;
@@ -38,8 +38,7 @@
       width: 100%;
     }
     .left-image {
-      max-width: 100%;
-      width: 100%;
+      max-width: 350px;
       height: auto;
       border-radius: 20px;
       box-shadow: 0 0 20px rgba(0,0,0,0.15);
@@ -150,32 +149,10 @@
       margin-top: 20px;
       display: none;
     }
-
-    /* 手機板調整 */
     @media (max-width: 768px) {
       .container {
         flex-direction: column;
         align-items: center;
-        gap: 20px;
-      }
-      h1 {
-        font-size: 2rem;
-        padding: 10px;
-      }
-      .machine, .prize-list {
-        width: 100%;
-        max-width: 400px;
-      }
-      #drawBtn {
-        width: 100%;
-        font-size: 20px;
-      }
-      #ticket {
-        font-size: 20px;
-        padding: 10px 20px;
-      }
-      #result {
-        font-size: 18px;
       }
     }
   </style>
